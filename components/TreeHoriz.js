@@ -1,13 +1,14 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import 'antd/dist/antd.css';
-import './index.css';
 import PubSub from 'pubsub-js';
-import { treeData, TOPIC_KEYS } from './config';
-import { TreeSingle } from './components/TreeSingle';
-import { SelectButton } from './components/SelectButton';
+import { TreeSingle } from './TreeSingle';
 
-class App extends React.Component {
+export class TreeHoriz extends React.Component {
+  /**
+   * :param props:
+   *     data: dict 数据
+   *     topicKey: string pubsub-js用于通信的key，不能和其他的key冲突
+   *     update
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -53,14 +54,14 @@ class App extends React.Component {
     } else {
       // 插入
       let key_index = -1;
-      for (var i = 0; i < treeData.length; i++) {
-        if (key == treeData[i].key) {
+      for (var i = 0; i < this.props.data.length; i++) {
+        if (key == this.props.data[i].key) {
           key_index = i;
           break;
         }
       }
 
-      this.state.appData.push(Object.assign({}, treeData[key_index]));
+      this.state.appData.push(Object.assign({}, this.props.data[key_index]));
       this.setState({
         appVersion: this.state.appVersion + 1,
         appData: [...this.state.appData]
@@ -72,52 +73,34 @@ class App extends React.Component {
 
   componentDidMount() {
     // 订阅相应的事件
-    this.pubsub_token = PubSub.subscribe(
-      TOPIC_KEYS.click,
-      function(topic, message) {
-        console.log('====subscribe:', message);
-        this.click(...message);
-      }.bind(this)
-    );
     this.pubsub_child = PubSub.subscribe(
-      TOPIC_KEYS.check,
+      this.props.topicKey,
       function(topic, message) {
-        console.log('====subscribe:', message);
+        console.log('====subscribe child:', message);
         this.onChildChanged(...message);
       }.bind(this)
     );
   }
 
   componentWillUnmount() {
-    PubSub.unsubscribe(this.pubsub_token);
     PubSub.unsubscribe(this.pubsub_child);
   }
 
   render() {
     return (
-      <div>
-        <div>
-          {treeData.map(item => (
-            <SelectButton key={item.key} itemKey={item.key} />
-          ))}
-        </div>
-        <div>
-          {this.state.appData.map(item => (
-            <TreeSingle
-              treeData={[item]}
-              topicKey={TOPIC_KEYS.check}
-              initCheckKeys={
-                item.key in this.state.allState
-                  ? this.state.allState[item.key]
-                  : []
-              }
-              parentVersion={this.state.appVersion}
-            />
-          ))}
-        </div>
+      <div style={{ float: 'left' }}>
+        {this.state.appData.map(item => (
+          <TreeSingle
+            ibbdData={[item]}
+            initCheckKeys={
+              item.key in this.state.allState
+                ? this.state.allState[item.key]
+                : []
+            }
+            parentVersion={this.state.appVersion}
+          />
+        ))}
       </div>
     );
   }
 }
-
-ReactDOM.render(<App />, document.getElementById('container'));

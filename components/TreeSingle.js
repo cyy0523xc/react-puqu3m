@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import { Tree } from 'antd';
 import PubSub from 'pubsub-js';
-import { TOPIC_KEYS } from '../config';
 
-export const Demo = props => {
-  const data = props.ibbdData;
+export const TreeSingle = props => {
+  const data = props.treeData;
   console.log(
-    'initCheckKeys in demo:',
+    'initCheckKeys in TreeSingle:',
     props.initCheckKeys,
     props.parentVersion
   );
-  console.log('data of in demo', data);
+  console.log('data of in TreeSingle', data);
   const key = data[0].key;
 
   const [expandedKeys, setExpandedKeys] = useState([]);
@@ -18,7 +17,7 @@ export const Demo = props => {
   const [selectedKeys, setSelectedKeys] = useState([]);
   const [autoExpandParent, setAutoExpandParent] = useState(true);
   const [appVersion, setAppVersion] = useState(0);
-  console.log('checkedKeys of in demo', checkedKeys);
+  console.log('checkedKeys of in TreeSingle', checkedKeys);
 
   if (props.parentVersion != appVersion) {
     // 父节点版本更新，意味着组件重新渲染，这时需要重新设置初始值
@@ -38,7 +37,7 @@ export const Demo = props => {
   const onCheck = checkedKeysValue => {
     console.log('onCheck', checkedKeysValue);
     setCheckedKeys(checkedKeysValue);
-    PubSub.publish(TOPIC_KEYS.check, [key, checkedKeysValue]);
+    PubSub.publish(props.topicKey, [key, checkedKeysValue]);
   };
 
   const onSelect = (selectedKeysValue, info) => {
@@ -49,6 +48,7 @@ export const Demo = props => {
 
   return (
     <Tree
+      style={{ float: 'left' }}
       checkable
       onExpand={onExpand}
       expandedKeys={expandedKeys}
