@@ -1,26 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
 import './index.css';
-import { Button } from 'antd';
 import PubSub from 'pubsub-js';
 import { treeData, TOPIC_KEYS } from './config';
-import { Demo } from './components/demo';
-
-const SelectButton = props => {
-  const [isSelect, setIsSelect] = useState(false);
-
-  const click = key => {
-    setIsSelect(!isSelect);
-    PubSub.publish(TOPIC_KEYS.click, [key, !isSelect]);
-  };
-
-  return (
-    <Button onClick={() => click(props.itemKey)}>
-      {isSelect ? 'Delete' : 'Add'} {props.itemKey}
-    </Button>
-  );
-};
+import { Demo } from './components/Demo';
+import { SelectButton } from './components/SelectButton';
 
 class App extends React.Component {
   constructor(props) {
