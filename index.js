@@ -51,10 +51,12 @@ class App extends React.Component {
       }
     }
     if (isSelect == is_in) {
+      // 如果目标状态和当前状态已经一致，则无效重新渲染
       return false;
     }
     console.log('click is in:', is_in, key);
     if (is_in) {
+      // 删除
       this.state.allState[key] = [];
       this.setState({
         appVersion: this.state.appVersion + 1,
@@ -64,6 +66,7 @@ class App extends React.Component {
         })
       });
     } else {
+      // 插入
       let key_index = -1;
       for (var i = 0; i < treeData.length; i++) {
         if (key == treeData[i].key) {
@@ -83,6 +86,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    // 订阅相应的事件
     this.pubsub_token = PubSub.subscribe(
       TOPIC_KEYS.click,
       function(topic, message) {
