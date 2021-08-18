@@ -15,6 +15,7 @@ class App extends React.Component {
       appData: [],
       appVersion: 0
     };
+    console.log('------ App constructor --------- ');
   }
 
   onChildChanged(key, checkedKeys) {
@@ -75,22 +76,24 @@ class App extends React.Component {
     this.pubsub_token = PubSub.subscribe(
       TOPIC_KEYS.click,
       function(topic, message) {
-        console.log('====subscribe:', message);
+        console.log('===> subscribe click:', message);
         this.click(...message);
       }.bind(this)
     );
     this.pubsub_child = PubSub.subscribe(
       TOPIC_KEYS.check,
       function(topic, message) {
-        console.log('====subscribe:', message);
+        console.log('===> subscribe check:', message);
         this.onChildChanged(...message);
       }.bind(this)
     );
+    console.log('============ mount:', this.pubsub_child);
   }
 
   componentWillUnmount() {
     PubSub.unsubscribe(this.pubsub_token);
     PubSub.unsubscribe(this.pubsub_child);
+    console.log('============ unmount:', this.pubsub_child);
   }
 
   render() {
@@ -98,7 +101,11 @@ class App extends React.Component {
       <div>
         <div>
           {treeData.map(item => (
-            <SelectButton key={item.key} itemKey={item.key} />
+            <SelectButton
+              key={item.key}
+              itemKey={item.key}
+              topicKey={TOPIC_KEYS.click}
+            />
           ))}
         </div>
         <div>
