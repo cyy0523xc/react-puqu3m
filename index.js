@@ -71,6 +71,10 @@ class App extends React.Component {
     console.log('click:', this.state.appData);
   }
 
+  onCheck(data) {
+    console.log('onCheck out:', data);
+  }
+
   componentDidMount() {
     // 订阅相应的事件
     this.pubsub_token = PubSub.subscribe(
@@ -80,20 +84,10 @@ class App extends React.Component {
         this.click(...message);
       }.bind(this)
     );
-    this.pubsub_child = PubSub.subscribe(
-      TOPIC_KEYS.check,
-      function(topic, message) {
-        console.log('===> subscribe check:', message);
-        this.onChildChanged(...message);
-      }.bind(this)
-    );
-    console.log('============ mount:', this.pubsub_child);
   }
 
   componentWillUnmount() {
     PubSub.unsubscribe(this.pubsub_token);
-    PubSub.unsubscribe(this.pubsub_child);
-    console.log('============ unmount:', this.pubsub_child);
   }
 
   render() {
@@ -111,6 +105,7 @@ class App extends React.Component {
         <div>
           {this.state.appData.map(item => (
             <TreeSingle
+              key={item.key}
               treeData={[item]}
               topicKey={TOPIC_KEYS.check}
               initCheckKeys={
@@ -118,7 +113,7 @@ class App extends React.Component {
                   ? this.state.allState[item.key]
                   : []
               }
-              parentVersion={this.state.appVersion}
+              onCheck={this.onCheck}
             />
           ))}
         </div>
