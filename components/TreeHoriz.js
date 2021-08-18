@@ -35,7 +35,7 @@ export class TreeHoriz extends React.Component {
 
   onDelete(key) {
     if (key in this.checkedKeysValue) {
-      delete this.checkedKeysValue[k];
+      delete this.checkedKeysValue[key];
       console.log('delete:', this.checkedKeysValue);
       this.props.onChange(this.checkedKeysValue);
     }
