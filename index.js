@@ -24,8 +24,7 @@ class App extends React.Component {
   click(key, isSelect) {
     console.log(key, isSelect);
     let is_in = false;
-    for (var i = 0; i < this.state.appData.length; i++) {
-      let v = this.state.appData[i];
+    for (var v of this.state.appData) {
       if (v.key == key) {
         is_in = true;
         break;
@@ -69,7 +68,7 @@ class App extends React.Component {
   }
 
   onChildChanged(data) {
-    console.log('onCheck in App:', data);
+    console.log('onChildChanged in App:', data);
   }
 
   componentDidMount() {

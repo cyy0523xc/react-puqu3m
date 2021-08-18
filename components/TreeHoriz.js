@@ -51,7 +51,7 @@ export class TreeHoriz extends React.Component {
       <div>
         {this.state.treeData.map(item => (
           <TreeSingle
-            key={item.key}
+            key={item.key} // key值应该保持全局唯一性
             treeData={[item]}
             onCheck={this.onCheck.bind(this)}
             onDelete={this.onDelete.bind(this)}

@@ -2,9 +2,9 @@ import React from 'react';
 import { Tree } from 'antd';
 
 /**
- * @property treeData:
- * @property onCheck:
- * @property onDelete:
+ * @property treeData: 单一子树的数据
+ * @property onCheck: function(key, values), 子树的选中状态改变时的回调函数
+ * @property onDelete: function(key), 子树被删除时的回调函数
  */
 export class TreeSingle extends React.Component {
   constructor(props) {
