@@ -29,22 +29,16 @@ export class TreeHoriz extends React.Component {
     console.log(this.state.treeData);
     this.checkedKeysValue[key] = values;
 
-    // 清理旧数据
-    let keys = [];
-    this.state.treeData.map(v => {
-      keys.push(v.key);
-    });
-    console.log('not delete:', keys);
-    for (var k in this.checkedKeysValue) {
-      console.log('==', k);
-      if (!k in keys) {
-        delete this.checkedKeysValue[k];
-        console.log('delete:', this.checkedKeysValue);
-      }
-    }
-
     // 数据返回给父组件
-    this.props.onCheck(this.checkedKeysValue);
+    this.props.onChange(this.checkedKeysValue);
+  }
+
+  onDelete(key) {
+    if (key in this.checkedKeysValue) {
+      delete this.checkedKeysValue[k];
+      console.log('delete:', this.checkedKeysValue);
+      this.props.onChange(this.checkedKeysValue);
+    }
   }
 
   render() {
@@ -56,6 +50,9 @@ export class TreeHoriz extends React.Component {
             treeData={[item]}
             onCheck={(k, v) => {
               this.onCheck(k, v);
+            }}
+            onDelete={k => {
+              this.onDelete(k);
             }}
           />
         ))}

@@ -42,6 +42,10 @@ export class TreeSingle extends React.Component {
     });
   }
 
+  componentWillUnmount() {
+    this.props.onDelete(this.props.treeData[0].key);
+  }
+
   render() {
     return (
       <Tree
