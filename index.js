@@ -4,7 +4,7 @@ import 'antd/dist/antd.css';
 import './index.css';
 import PubSub from 'pubsub-js';
 import { treeData, TOPIC_KEYS } from './config';
-import { TreeSingle } from './components/TreeSingle';
+import { TreeHoriz } from './components/TreeHoriz';
 import { SelectButton } from './components/SelectButton';
 
 class App extends React.Component {
@@ -12,8 +12,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       allState: {},
-      appData: [],
-      appVersion: 0
+      appData: []
+      // appVersion: 0
     };
     console.log('------ App constructor --------- ');
   }
@@ -25,6 +25,9 @@ class App extends React.Component {
       allState: Object.assign({}, this.state.allState)
     });
   }
+
+  // 数据版本
+  dataVersion = 0;
 
   click(key, isSelect) {
     console.log(key, isSelect);
@@ -45,7 +48,7 @@ class App extends React.Component {
       // 删除
       this.state.allState[key] = [];
       this.setState({
-        appVersion: this.state.appVersion + 1,
+        // appVersion: this.state.appVersion + 1,
         allState: this.state.allState,
         appData: this.state.appData.filter(function(item) {
           return item.key != key;
@@ -63,16 +66,18 @@ class App extends React.Component {
 
       this.state.appData.push(Object.assign({}, treeData[key_index]));
       this.setState({
-        appVersion: this.state.appVersion + 1,
+        // appVersion: this.state.appVersion + 1,
         appData: [...this.state.appData]
       });
     }
 
+    // 改变版本
+    this.dataVersion++;
     console.log('click:', this.state.appData);
   }
 
   onCheck(data) {
-    console.log('onCheck out:', data);
+    console.log('onCheck in App:', data);
   }
 
   componentDidMount() {
@@ -102,21 +107,20 @@ class App extends React.Component {
             />
           ))}
         </div>
-        <div>
+        <TreeHoriz
+          treeData={this.state.appData}
+          onCheck={this.onCheck}
+          version={this.dataVersion}
+        />
+        {/* <div>
           {this.state.appData.map(item => (
             <TreeSingle
               key={item.key}
               treeData={[item]}
-              topicKey={TOPIC_KEYS.check}
-              // initCheckKeys={
-              //   item.key in this.state.allState
-              //     ? this.state.allState[item.key]
-              //     : []
-              // }
               onCheck={this.onCheck}
             />
           ))}
-        </div>
+        </div> */}
       </div>
     );
   }

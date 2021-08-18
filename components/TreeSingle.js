@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { Tree } from 'antd';
 
+/**
+ * treeData:
+ * onCheck:
+ */
 export const TreeSingle = props => {
   const data = props.treeData;
   const key = data[0].key;
@@ -23,7 +27,7 @@ export const TreeSingle = props => {
     console.log('onCheck', checkedKeysValue);
     setCheckedKeys(checkedKeysValue);
     // 数据返回给父组件
-    props.onCheck([key, checkedKeysValue]);
+    props.onCheck(key, checkedKeysValue);
   };
 
   const onSelect = (selectedKeysValue, info) => {
