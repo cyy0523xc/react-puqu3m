@@ -1,6 +1,5 @@
 export const TOPIC_KEYS = {
-  click: 'TOPIC_CLICK',
-  check: 'TOPIC_CHECK'
+  click: 'TOPIC_CLICK'
 };
 
 export const treeData = [
