@@ -108,11 +108,11 @@ class App extends React.Component {
               key={item.key}
               treeData={[item]}
               topicKey={TOPIC_KEYS.check}
-              initCheckKeys={
-                item.key in this.state.allState
-                  ? this.state.allState[item.key]
-                  : []
-              }
+              // initCheckKeys={
+              //   item.key in this.state.allState
+              //     ? this.state.allState[item.key]
+              //     : []
+              // }
               onCheck={this.onCheck}
             />
           ))}

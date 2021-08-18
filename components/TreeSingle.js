@@ -3,19 +3,13 @@ import { Tree } from 'antd';
 
 export const TreeSingle = props => {
   const data = props.treeData;
-  console.log(
-    'initCheckKeys in TreeSingle:',
-    props.initCheckKeys
-    // props.parentVersion
-  );
-  console.log('data of in TreeSingle', data);
   const key = data[0].key;
+  console.log('====== TreeSingle RUN:', key, data);
 
   const [expandedKeys, setExpandedKeys] = useState([]);
   const [checkedKeys, setCheckedKeys] = useState([]);
   const [selectedKeys, setSelectedKeys] = useState([]);
   const [autoExpandParent, setAutoExpandParent] = useState(true);
-  console.log('checkedKeys of in TreeSingle', checkedKeys);
 
   const onExpand = expandedKeysValue => {
     console.log('onExpand', expandedKeysValue);
@@ -28,6 +22,7 @@ export const TreeSingle = props => {
   const onCheck = checkedKeysValue => {
     console.log('onCheck', checkedKeysValue);
     setCheckedKeys(checkedKeysValue);
+    // 数据返回给父组件
     props.onCheck([key, checkedKeysValue]);
   };
 
