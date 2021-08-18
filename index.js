@@ -18,14 +18,6 @@ class App extends React.Component {
     console.log('------ App constructor --------- ');
   }
 
-  onChildChanged(key, checkedKeys) {
-    this.state.allState[key] = checkedKeys;
-    console.log('onChildChanged:', key, checkedKeys);
-    this.setState({
-      allState: Object.assign({}, this.state.allState)
-    });
-  }
-
   // 数据版本
   dataVersion = 0;
 
@@ -76,7 +68,7 @@ class App extends React.Component {
     console.log('click:', this.state.appData);
   }
 
-  onCheck(data) {
+  onChildChanged(data) {
     console.log('onCheck in App:', data);
   }
 
@@ -109,18 +101,9 @@ class App extends React.Component {
         </div>
         <TreeHoriz
           treeData={this.state.appData}
-          onCheck={this.onCheck}
+          onChange={this.onChildChanged}
           version={this.dataVersion}
         />
-        {/* <div>
-          {this.state.appData.map(item => (
-            <TreeSingle
-              key={item.key}
-              treeData={[item]}
-              onCheck={this.onCheck}
-            />
-          ))}
-        </div> */}
       </div>
     );
   }

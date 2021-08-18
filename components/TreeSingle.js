@@ -5,49 +5,60 @@ import { Tree } from 'antd';
  * treeData:
  * onCheck:
  */
-export const TreeSingle = props => {
-  const data = props.treeData;
-  const key = data[0].key;
-  console.log('====== TreeSingle RUN:', key, data);
+export class TreeSingle extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      expandedKeys: [],
+      checkedKeys: [],
+      selectedKeys: [],
+      autoExpandParent: true
+    };
+    console.log('------ TreeSingle constructor --------- ');
+  }
 
-  const [expandedKeys, setExpandedKeys] = useState([]);
-  const [checkedKeys, setCheckedKeys] = useState([]);
-  const [selectedKeys, setSelectedKeys] = useState([]);
-  const [autoExpandParent, setAutoExpandParent] = useState(true);
-
-  const onExpand = expandedKeysValue => {
+  onExpand(expandedKeysValue) {
     console.log('onExpand', expandedKeysValue);
-    console.log(expandedKeys);
+    this.setState({
+      expandedKeys: expandedKeysValue,
+      autoExpandParent: false
+    });
+  }
 
-    setExpandedKeys(expandedKeysValue);
-    setAutoExpandParent(false);
-  };
-
-  const onCheck = checkedKeysValue => {
+  onCheck(checkedKeysValue) {
     console.log('onCheck', checkedKeysValue);
-    setCheckedKeys(checkedKeysValue);
+    this.setState({
+      checkedKeys: checkedKeysValue
+    });
     // 数据返回给父组件
-    props.onCheck(key, checkedKeysValue);
-  };
+    this.props.onCheck(this.props.treeData[0].key, checkedKeysValue);
+  }
 
-  const onSelect = (selectedKeysValue, info) => {
+  onSelect(selectedKeysValue, info) {
     console.log('onSelect', info);
     console.log(selectedKeysValue);
-    setSelectedKeys(selectedKeysValue);
-  };
+    this.setState({
+      selectedKeys: selectedKeysValue
+    });
+  }
 
-  return (
-    <Tree
-      style={{ float: 'left' }}
-      checkable
-      onExpand={onExpand}
-      expandedKeys={expandedKeys}
-      autoExpandParent={autoExpandParent}
-      onCheck={onCheck}
-      checkedKeys={checkedKeys}
-      onSelect={onSelect}
-      selectedKeys={selectedKeys}
-      treeData={data}
-    />
-  );
-};
+  render() {
+    return (
+      <Tree
+        style={{ float: 'left' }}
+        checkable
+        {...this.state}
+        onExpand={v => {
+          this.onExpand(v);
+        }}
+        onCheck={v => {
+          this.onCheck(v);
+        }}
+        onSelect={(v, info) => {
+          this.onSelect(v, info);
+        }}
+        treeData={this.props.treeData}
+      />
+    );
+  }
+}
