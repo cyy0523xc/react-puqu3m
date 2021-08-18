@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { Tree } from 'antd';
 
 /**
- * treeData:
- * onCheck:
+ * @property treeData:
+ * @property onCheck:
+ * @property onDelete:
  */
 export class TreeSingle extends React.Component {
   constructor(props) {

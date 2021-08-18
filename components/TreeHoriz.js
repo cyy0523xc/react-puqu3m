@@ -1,6 +1,11 @@
 import React from 'react';
 import { TreeSingle } from './TreeSingle';
 
+/**
+ * @property treeData: 树结构数据
+ * @property version: 数据版本, 输入数据更新的时候, 该版本号应该更新
+ * @property onChange: function(data), 数据更新的时候, 回调函数
+ */
 export class TreeHoriz extends React.Component {
   constructor(props) {
     super(props);
