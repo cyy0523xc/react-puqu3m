@@ -53,12 +53,8 @@ export class TreeHoriz extends React.Component {
           <TreeSingle
             key={item.key}
             treeData={[item]}
-            onCheck={(k, v) => {
-              this.onCheck(k, v);
-            }}
-            onDelete={k => {
-              this.onDelete(k);
-            }}
+            onCheck={this.onCheck.bind(this)}
+            onDelete={this.onDelete.bind(this)}
           />
         ))}
       </div>

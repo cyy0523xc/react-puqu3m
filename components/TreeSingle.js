@@ -53,15 +53,9 @@ export class TreeSingle extends React.Component {
         style={{ float: 'left' }}
         checkable
         {...this.state}
-        onExpand={v => {
-          this.onExpand(v);
-        }}
-        onCheck={v => {
-          this.onCheck(v);
-        }}
-        onSelect={(v, info) => {
-          this.onSelect(v, info);
-        }}
+        onExpand={this.onExpand.bind(this)}
+        onCheck={this.onCheck.bind(this)}
+        onSelect={this.onSelect.bind(this)}
         treeData={this.props.treeData}
       />
     );
